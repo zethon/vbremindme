@@ -62,10 +62,6 @@ if (!strstr($remindtext, "\n") && stripos($remindtext,$rmtoken)===0)
     {
         $vbo["remindme_dateline"] = $dateval;
         $vbo["remindme_msgtext"] = $msgtext;
-
-        $datetxt = vbdate($vbo['dateformat'], $vbo["remindme_dateline"]);
-        $timetxt = vbdate($vbo['timeformat'], $vbo["remindme_dateline"]);
-        print ("<h1>!!!($datetxt)($timetxt)[$vbo[remindme_msgtext]]!!!</h1>");
     }
     else
     {
