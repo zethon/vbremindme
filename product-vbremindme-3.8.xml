@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="vbulletinbot" active="1">
+	<title>vbRemindMe</title>
+	<description>RemindMe Bot for vBulletin</description>
+	<version>0.1</version>
+	<url />
+	<versioncheckurl />
+	<apm_author>Adalid Claure</apm_author>
+	<apm_relatedurl />
+	<apm_extrainfo>https://github.com/zethon/vbremindme</apm_extrainfo>
+	<apm_extraedit />
+	<dependencies>
+	</dependencies>
+	<codes>
+		<code version="1.0">
+			<installcode>
+			<![CDATA[
+$db->hide_errors();
+$db->query_write("CREATE TABLE IF NOT EXISTS  " . TABLE_PREFIX . "reminders (
+	`reminderid` int(11) NOT NULL auto_increment,
+	`userid` int(11) NOT NULL auto_increment,
+	`dateline` timestamp NOT NULL default CURRENT_TIMESTAMP,
+	`message` longtext NOT NULL,
+	PRIMARY KEY  (reminderid)
+);");			
+			]]>
+			</installcode>
+			<uninstallcode>
+			<![CDATA[
+// php code here
+			]]>
+			</uninstallcode>
+		</code>
+	</codes>
+	<templates>
+	</templates>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>vBulletinBot: Cache Templates</title>
+			<hookname>cache_templates</hookname>
+			<phpcode>
+<![CDATA[
+// php code here
+]]>
+			</phpcode>
+		</plugin>	
+	</plugins>
+	<phrases>
+		<!--<phrasetype name="Control Panel Global" fieldname="cpglobal">
+			<phrase name="xk0vb_testpage_title"><![CDATA[vBot Test Page]]></phrase>			
+		</phrasetype>-->
+	</phrases>
+	<options>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+</product>
