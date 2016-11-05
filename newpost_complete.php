@@ -49,7 +49,8 @@ if (isset($vbo["remindme_dateline"]))
     }
     else
     {
-        print "<h1>Error making new post! " . $newpost->errors[0] . $newpost->errors[1] . $newpost->errors[2] ."</h1>";   
+        // TODO: log error?
+        //print "<h1>Error making new post! " . $newpost->errors[0] . $newpost->errors[1] . $newpost->errors[2] ."</h1>";   
     }   
 
     // just to be sure

@@ -9,7 +9,7 @@ $db = $vbulletin->db;
 $botinfo = fetch_userinfo($botuserid);
 $permissions = cache_permissions($botinfo);
 
-$reminders = $db->query_read("SELECT * FROM ". TABLE_PREFIX ."remindme");
+$reminders = $db->query_read("SELECT * FROM ". TABLE_PREFIX ."remindme WHERE delivered!=1");
 while ($reminderinfo = $db->fetch_array($reminders))
 {
 	if ($reminderinfo['dateline'] < TIMENOW)
@@ -36,6 +36,13 @@ while ($reminderinfo = $db->fetch_array($reminders))
 		{
 			$pmdm->save();
 		}
+		else
+		{
+			// TODO: maybe retry and track the number of retries so it's only retried X number of times
+			// but for now we'll just mark it as delivered
+		}
+
+		$db->query_write("UPDATE ". TABLE_PREFIX ."remindme SET delivered=1 WHERE remindmeid=$reminderinfo[remindmeid]");
 	}
 }
 
