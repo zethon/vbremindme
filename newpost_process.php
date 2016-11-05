@@ -11,32 +11,27 @@ function getDateline($dtext)
     global $vbulletin;
     $dtext = trim($dtext);
 
-    $temp = date_parse($dtext); 
-    if ($temp !== FALSE && $temp['year'] > 0 && $temp['month'] > 0 && $temp['day'] > 0)
+    // let strtotime get a first pass at it
+    $val = strtotime($dtext);
+    if ($val === FALSE)
     {
-        print ("<h1>Hell yeah!</h1>");
-        print ("<pre>");
-        print_r($temp);
-        print ("</pre>");
-        die;
-    }
-    else if ((strcasecmp($dtext, "tommorrow") == 0) 
-        || (strcasecmp($dtext, "tomorrow") == 0)
-        || (strcasecmp($dtext, "tommorow") == 0))
-    {
-        $val = TIMENOW + 86400;
-    }
-    else
-    {
-        $val = FALSE;
+        // let's try to do some parsing of our own
+        if ((strcasecmp($dtext, "tommorrow") == 0) 
+            || (strcasecmp($dtext, "tomorrow") == 0)
+            || (strcasecmp($dtext, "tommorow") == 0))
+        {
+            $val = TIMENOW + 86400;
+        }
     }
 
-    return $val;    
+    return $val;
 }
 
 $rmtoken = 'remindme! ';
 
 $remindtext = trim($post['message']);
+
+// the remindme! message must be the first text of the post and only be one line 
 if (!strstr($remindtext, "\n") && stripos($remindtext,$rmtoken)===0) 
 {
     $msgtext = "";
@@ -58,16 +53,19 @@ if (!strstr($remindtext, "\n") && stripos($remindtext,$rmtoken)===0)
 
     $dateval = getDateline($dtext);
 
-    if ($dateval !== FALSE)
+    if ($dateval === FALSE)
+    {
+        eval(standard_error("Invalid date/time. Please press 'BACK' and try again."));
+    }
+    else if ($dateval <= TIMENOW)
+    {
+        eval(standard_error("Must specify a time in the future. Please press 'BACK' and try again."));
+    }
+    else
     {
         $vbo["remindme_dateline"] = $dateval;
         $vbo["remindme_msgtext"] = $msgtext;
     }
-    else
-    {
-        eval(standard_error("Invalid date/time. Please press 'BACK' and try again."));
-    }
 }
-
 
 ?>

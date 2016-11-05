@@ -10,11 +10,12 @@ if (isset($vbo["remindme_dateline"]))
 {
     // create the reminder
     $newposturl = $vbo['bburl'] . "/showthread.php?p=" . $post['postid'] . "#post". $post['postid'];
-    $remindertext = "I am the RemindMe Bot reminding you about this post: [url]$newposturl[/url]";
+    $remindertext = 'I am the RemindMe Bot reminding you about this post: [url]' . $newposturl . '[/url]';
     if (isset($vbo["remindme_msgtext"]) && strlen($vbo["remindme_msgtext"]) > 0)
     {
         $remindertext .= "\n\n[QUOTE]$vbo[remindme_msgtext][/QUOTE]"; 
     }
+    $remindertext = $vbulletin->db->escape_string($remindertext);
     $db->query_write("INSERT INTO ".TABLE_PREFIX."remindme (userid, dateline, message) VALUES ($vbu[userid],$vbo[remindme_dateline],'$remindertext');");
 
     // create a new post informing the user we've created the reminder
