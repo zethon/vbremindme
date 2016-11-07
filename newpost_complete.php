@@ -22,7 +22,7 @@ if (isset($vbo["remindme_dateline"]))
     $datetxt = vbdate($vbo['dateformat'], $vbo["remindme_dateline"]);
     $timetxt = vbdate($vbo['timeformat'], $vbo["remindme_dateline"]);
 
-    $quotetext = "[QUOTE=$post[username];$post[postid]]$post[message][/QUOTE]";
+    $quotetext = "[QUOTE=$vbu[username];$post[postid]]$post[message][/QUOTE]";
     $botposttext = "$quotetext\n\nI will send you a private message on $datetxt $timetxt to remind you of this post";
     if (isset($vbo["remindme_msgtext"]) && strlen($vbo["remindme_msgtext"]) > 0)
     {
